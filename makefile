@@ -12,13 +12,13 @@ server: server.o common.o
 client: client.o common.o
 	${CC} -lm -o client client.o common.o
 
-client.o:
+client.o: client.c
 	${CC} -c -o client.o client.c
 
-server.o:
+server.o: client.c
 	${CC} -c -o server.o server.c
 
-common.o:
+common.o: common.c
 	${CC} -c -o common.o common.c
 
 clean:

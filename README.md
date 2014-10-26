@@ -1,7 +1,6 @@
 Simple HTTP client/server
 
 Jesse Earisman
-jkearisman
 
 18-9-2014
 
@@ -64,4 +63,3 @@ Both programs are relatively secure, but no though audit has been done, if you
 	put sensitive data in here, i'm not responsible for what happens
 The file common.c contains stuff common to both the server and client, and must be
 	in the same directory as both for them to compile
-All code compiles and runs on the ccc machines
