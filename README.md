@@ -4,19 +4,21 @@ Jesse Earisman
 
 18-9-2014
 
-To Build client and server:
-	make
+To Build Client:
+	cd client && make
 
-This creates two executables "client" and "server" it the same directory as the makefile
+To Build Server:
+	cd server && make
 
+executables are created in the same directory as makefiles
 
 ### Server ###
 To run server:
 server PORT
 
 	Server will start up on the given port number, or fail if it cannot bind with that port.
-	Unless you are running with elevated priveliges, all ports under 1024 should be off limits
-	Recommended port is 8080, the backup http port, although the server can theoretically 
+	Unless you are running with elevated privileges, all ports under 1024 should be off limits
+	Recommended port is 8080 for basic users, the backup http port, although the server can theoretically 
 		run anything up to the maximum port number of 65536
 
 	In the server.c file, there is a constant WEBROOT. This is the root of your web server.
@@ -31,6 +33,8 @@ server PORT
 		the program will work fine even if the OS limit is lower than the MAX_MSG_LEN
 	The server is run in an infinite loop, to close it, send it a SIGINT with ctrl-c, it
 		will shutdown gracefully
+	The Server uses the pthread library to enable multiple simultaneous threads. It maintains a number of
+		threads up to the defined MAX_CLIENT_NUM (default 20)
 
 ### Client ###
 To run client:
@@ -58,8 +62,5 @@ client [options] URL PORT
 
 ### More Notes ###
 Both Programs have been verified with valgrind to have no memory leaks
-Keep-alive is not implemented, all connections are non-persistant
 Both programs are relatively secure, but no though audit has been done, if you
 	put sensitive data in here, i'm not responsible for what happens
-The file common.c contains stuff common to both the server and client, and must be
-	in the same directory as both for them to compile

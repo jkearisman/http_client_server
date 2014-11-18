@@ -9,7 +9,7 @@ address, and print the webpage it returns to stdout
 
 if the -p flag is given, this program also calculates the round trip time
 */
-#include "common.h"
+#include "get_socket.h"
 #include <time.h>
 
 
