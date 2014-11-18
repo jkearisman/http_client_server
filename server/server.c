@@ -25,15 +25,17 @@ int was_active[MAX_CLIENTS];
 
 
 void sighandler(int signum);
-int parse_request(char* request, struct request *r);
-int send_reply(int con_sock, char* request);
-int handle_connection(void* con_attrs);
 
 /*
 	 When the program receives a sigint, this function is called, it closes the root
 	 socket, and the program shuts down gracefully
  */
 void sighandler(int signum) {
+	if(signum == SIGINT) {
+		printf("Caught a SIGINT\n");
+	} else {
+		printf("Caught a non-SIGINT signal\n");
+	}
 	printf("Closing root socket\n");
 	close(root_socket);
 }
@@ -87,7 +89,7 @@ int main(int argc, char* argv[]) {
 				}
 				thread_attrs[i].is_running = 1;
 				thread_attrs[i].socket = con_sock;
-				pthread_create(&threads[i], NULL, (void*)(&handle_connection), (void*)(&thread_attrs[i]));
+				pthread_create(&threads[i], NULL, handle_connection, (void*)(&thread_attrs[i]));
 				no_open_threads = 0;
 				break;
 			}

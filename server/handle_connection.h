@@ -17,4 +17,4 @@ struct server_thread_attr {
 	int is_running;
 };
 
-int handle_connection(void* con_attrs);
+void* handle_connection(void* con_attrs);

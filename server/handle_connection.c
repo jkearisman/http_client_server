@@ -111,7 +111,7 @@ int send_reply(int con_sock, char* request) {
 	 @param con_attrs: a server_thread_attr struct containing the socket, and an running flag
 	 @return: 0 on success, -1 on error
  */
-int handle_connection(void* con_attrs) {
+void* handle_connection(void* con_attrs) {
 	struct server_thread_attr* just_connected = (struct server_thread_attr*)(con_attrs);
 	int con_sock = just_connected->socket;
 
@@ -157,7 +157,7 @@ int handle_connection(void* con_attrs) {
 	free(msg);
 	just_connected->is_running = 0;
 	printf("Thread returning\n");
-	return 0;
+	return NULL;
 }
 
 
