@@ -8,7 +8,7 @@ right now, it is just the get_socket() function, but any future functions that a
 by both client.c and server.c should go in here
 */
 
-#include "common.h"
+#include "get_socket.h"
 
 /*
 	 Given a host and a destination port, gets a socket

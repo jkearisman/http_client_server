@@ -179,10 +179,10 @@ int main(int argc, char* argv[]) {
 	send(s, input, strlen(input), 0);
 
 	//Prepare for the server to give us a webpage
-	char* header  = malloc(BUFFER_SIZE);
+	char* header  = calloc(BUFFER_SIZE, sizeof(*header));
 	char byte_buffer;
-	memset(header, 0, BUFFER_SIZE);
 	int header_len = BUFFER_SIZE;
+	int plus_header;
 	int index = 0;
 	header[0] = '\0';
 	int content_length;
@@ -193,8 +193,10 @@ int main(int argc, char* argv[]) {
 	while(strstr(header, "\r\n\r\n") == NULL) {
 		//If the size we have alloc'ed for header is not big enough, double it
 		if (index+1 >= header_len) {
-			header_len *= 2;
-			header = realloc(header, header_len);
+			plus_header = header_len;
+			header = realloc(header, header_len + plus_header );
+			memset( header+plus_header, 0, (plus_header * sizeof( *header ) ) );
+			header_len += plus_header;
 		}
 		chars_read = recv(s, &byte_buffer, 1, 0);
 		header[index++] = byte_buffer;
