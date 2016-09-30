@@ -2,13 +2,14 @@ CC = gcc -Wall -lrt -lpthread
 C_SOURCES = $(wildcard *.c)
 OBJECTS = $(C_SOURCES:.c=.o)
 debug = -g
+EXE = client
 
-all: client
+all: ${EXE}
 
 debug: CC += -g
 debug: all
 
-client: ${OBJECTS}
+${EXE}: ${OBJECTS}
 	${CC} -lm -o $@ $^
 
 %.o: %.c
@@ -16,4 +17,5 @@ client: ${OBJECTS}
 
 clean:
 	rm *.o
+	rm ${EXE}
 

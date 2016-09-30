@@ -3,12 +3,14 @@ C_SOURCES = $(wildcard *.c)
 OBJECTS = $(C_SOURCES:.c=.o)
 debug = -g
 
-all: server
+EXE = server
+
+all: ${EXE}
 
 debug: CC += -g
 debug: all
 
-server: ${OBJECTS}
+${EXE}: ${OBJECTS}
 	${CC} -o $@ $^
 
 %.o: %.c
@@ -16,4 +18,5 @@ server: ${OBJECTS}
 
 clean:
 	rm *.o
+	rm ${EXE}
 
