@@ -12,7 +12,7 @@ client: ${OBJECTS}
 	${CC} -lm -o $@ $^
 
 %.o: %.c
-	gcc -c -o $@ $^
+	${CC} -c -o $@ $^
 
 clean:
 	rm *.o
