@@ -1,12 +1,12 @@
 /*
-client.c
-Written by: Jesse Earisman
+	 client.c
+	 Written by: Jesse Earisman
 Date: 18-9-2014
 
 A basic http server
 Given a port, this program will set up an http server on that port. It supports 
 HTTP GET requests.
-*/
+ */
 
 #include "get_socket.h"
 #include "handle_connection.h"
@@ -100,16 +100,14 @@ int main(int argc, char* argv[]) {
 		}
 		con_sock = accept(root_socket, NULL, NULL);
 	}
-	/*
 	printf("Closing all threads\n");
-	for(i = 0; i < MAX_CLIENTS; i++) {
+	for(int i = 0; i < MAX_CLIENTS; i++) {
 		if(was_active[i]) {
-			printf("Closing thread %d\n", i);
+			printf("\tClosing thread %d\n", i);
 			pthread_join(threads[i], NULL);
 		}
 
 	}
-	*/
 	free(act);
 	return 0;
 }

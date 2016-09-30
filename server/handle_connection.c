@@ -15,8 +15,10 @@
 int parse_request(char* request, struct request *r) {
 	char *saveptr_main, *saveptr_top;
 	char* line = strtok_r(request, "\r\n", &saveptr_main);
-	//parse first line should look like
-	// "GET /[file] HTTP/1.1"
+	/*
+	parse first line should look like
+	 "GET /[file] HTTP/1.1"
+	*/
 	r->method = strtok_r(line, " ", &saveptr_top);
 	r->file = strtok_r(NULL, " ", &saveptr_top);
 	r->version = strtok_r(NULL, " ", &saveptr_top);
@@ -59,7 +61,6 @@ int send_reply(int con_sock, char* request) {
 		char* reply = "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 15\r\n\r\n400 Bad Request";
 		send(con_sock, reply, strlen(reply), 0);
 	} else {
-
 		if(version > 1.1) {
 			char* reply = "HTTP/1.1 505 Version Not Supported\r\nConnection: close\r\nContent-Length: 0\r\n\r\n";
 			send(con_sock, reply, strlen(reply), 0);
@@ -89,11 +90,9 @@ int send_reply(int con_sock, char* request) {
 		content_length = buf.st_size+1;
 		char header[200];
 		sprintf(header, "HTTP/1.1 200 OK\r\nContent-Length: %d\r\nConnection: close\r\n\r\n", content_length);
-		//Send out the header, containing 200 OK, and the content length
 		send(con_sock, header, strlen(header), 0);
 		char body[content_length];
 		memset(&body, 0, sizeof(body));
-		//Get and send out the requested file
 		read(fd, body, content_length);
 		send(con_sock, body, content_length, 0);
 		close(fd);
@@ -127,7 +126,6 @@ void* handle_connection(void* con_attrs) {
 	while(chars_read > 0) {
 		//what recv puts in the buffer is not null terminated
 		// we add the null byte so we can use strcat
-		// TODO: replace strcat with strncat or memcpy
 		buffer[chars_read] = '\0';
 		len += chars_read;
 			//If the space we made for the message isn't big enough, double it
